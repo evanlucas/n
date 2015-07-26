@@ -371,7 +371,11 @@ activate() {
   check_current_version
   if test "$version" != "$active"; then
     local dir=$BASE_VERSIONS_DIR/$version
-    cp -fR $dir/bin $dir/lib $dir/share $N_PREFIX
+    cp -fR $dir/bin/node $N_PREFIX/bin/node
+    if [[ -f $dir/bin/iojs ]]; then
+      cp -fR $dir/bin/iojs $N_PREFIX/bin/iojs
+    fi
+    cp -fR $dir/{lib/dtrace,share} $N_PREFIX
     [[ -d "$dir/include" ]] && cp -fR $dir/include $N_PREFIX
   fi
 }
